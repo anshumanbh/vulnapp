@@ -84,4 +84,4 @@ def logout():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)  # Vulnerable: Debug mode enabled in production
+    app.run(debug=True, port=5001)  # Vulnerable: Debug mode enabled in production
