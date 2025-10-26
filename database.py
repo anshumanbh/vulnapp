@@ -1,5 +1,6 @@
 import sqlite3
 import hashlib
+import os
 
 def get_db():
     db = sqlite3.connect('users.db')
@@ -23,8 +24,8 @@ def init_db():
     ''')
     
     # Insert default admin and user with different passwords and specific IDs
-    admin_password = hashlib.md5('adminpass123'.encode()).hexdigest()
-    user_password = hashlib.md5('userpass123'.encode()).hexdigest()
+    admin_password = hashlib.md5(os.getenv('ADMIN_PASSWORD', 'adminpass123').encode()).hexdigest()
+    user_password = hashlib.md5(os.getenv('USER_PASSWORD', 'userpass123').encode()).hexdigest()
     
     try:
         db.execute('DELETE FROM users')  # Clear existing users
