@@ -5,7 +5,7 @@ from auth import login_required, admin_required
 import hashlib
 
 app = Flask(__name__)
-app.secret_key = 'super-secret-key'  # Vulnerable: Hard-coded secret key
+app.secret_key = 'super-secret-key'
 app.register_blueprint(profile)
 
 @app.route('/')
@@ -44,7 +44,6 @@ def dashboard():
 @app.route('/api/user/<int:user_id>')
 @login_required
 def get_user_details(user_id):
-    # Vulnerable: No authorization check for user_id
     db = get_db()
     user = db.execute(
         'SELECT id, username, role, email, phone, address FROM users WHERE id = ?', 
@@ -63,7 +62,7 @@ def get_user_details(user_id):
     return jsonify({"error": "User not found"}), 404
 
 @app.route('/update_role', methods=['POST'])
-@login_required  # Vulnerable: Missing admin check
+@login_required
 def update_role():
     user_id = request.form.get('user_id')
     new_role = request.form.get('role')
@@ -84,4 +83,4 @@ def logout():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=5001)  # Vulnerable: Debug mode enabled in production
+    app.run(debug=True, port=5001)

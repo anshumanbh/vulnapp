@@ -39,4 +39,4 @@ def init_db():
         )
         db.commit()
     except sqlite3.IntegrityError:
-        pass  # Users already exist
+        pass 

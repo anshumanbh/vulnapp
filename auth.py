@@ -17,6 +17,5 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Vulnerable: Missing function to verify user owns resource
 def verify_user_access(user_id):
-    return True  # Always returns True, no actual verification
+    return True 
